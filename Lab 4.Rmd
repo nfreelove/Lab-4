@@ -1,0 +1,46 @@
+---
+title: "Lab 4"
+authors: "Nick Freelove, Austin Collins, Liuyi Bao"
+date: "3/1/2018"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
+names(av)
+av %>% head()
+```
+##1.
+
+```{r}
+allinone <- av %>% gather(Time, Outcome, starts_with("Death")) 
+allinone <- allinone %>% mutate(Event= gsub("(.*)[1-5]", "\\1", Time),Time=parse_number(Time))
+```
+
+##2.
+###Deaths
+"I counted 89 total deaths"
+```{r}
+
+count(allinone,Outcome)
+```
+###Returns
+"on 57 occasions the individual made a comeback."
+```{r}
+returns <- av %>% gather(Time,Return1,starts_with("Return"))
+count(returns,Return1)
+```
+
+###Multiple Returns
+"But you can only tempt death so many times. There's a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife, but only a 50 percent chance they recovered from a second or third death."
+```{r}
+chances <- av %>% gather(Time,Return1,starts_with("Return1"))
+chances2 <- av %>% gather(Time,Secondreturn,one_of("Return2","Return3"))
+count(chances ,Return1)
+count(chances2, Secondreturn)
+
+```
