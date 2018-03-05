@@ -1,35 +1,46 @@
 ---
 title: "Lab4"
-author: "Group5"
+author: "Group5 Austin Collins, Nicholas Freelove, Liuyi Bao"
 date: "March 1, 2018"
 output: html_document
 ---
-
+Github:https://github.com/nfreelove/Lab-4
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 ```{r}
 library(tidyverse)
+```
+
+```{r}
 av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
-names(av)
-av
-```
-1.
+head(av)
+allinone <- av %>% gather(Time,Outcome, starts_with('Death'))
+allinone <- allinone %>% mutate(
+  Event = gsub("(.*)[1-5]","\\1",Time),
+  Time = parse_number(Time))
+allinone2 <- av %>% gather(Time,Outcome2, starts_with('Return'))
+allinone3 <- av %>% gather(Time,DidHeReturn1,starts_with("Return1"))
+allinone4 <- av %>% gather(Time,DidHeReturnAfter,one_of("Return2","Return3"))
 
+
+```
+## Analysis
+### Total Deaths
+"I counted 89 total deaths - some unlucky Avengers7 are basically Meat Loaf with an E-ZPass - and on 57 occasions the individual made a comeback. "
 ```{r}
-allinone <- av %>% gather(Time, Outcome, starts_with("Death")) 
-allinone <- allinone %>% mutate(Event= gsub("(.*)[1-5]", "\\1", Time),Time=parse_number(Time))
-allinone %>% filter(Event == "Death") %>% count(Outcome)
-allinone <- av %>% gather(Time, Outcome, starts_with("Return"))
+count(allinone,Outcome)
 
 ```
+### Total Returns
+"on 57 occasions the individual made a comeback. "
 ```{r}
-allinone <- av %>% gather(Time, Outcome, starts_with("Return"))
-allinone <- allinone %>% mutate(Event= gsub("(.*)[1-5]", "\\1", Time),Time=parse_number(Time))
-allinone %>% filter(Event == "Return") %>% count(Outcome)
+count(allinone2,Outcome2)
+```
+### Chance At Returning
+"But you can only tempt death so many times. There's a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife, but only a 50 percent chance they recovered from a second or third death.8"
+```{r}
+count(allinone3,DidHeReturn1)
+count(allinone4,DidHeReturnAfter)
 ```
 
-2.
-
-Based on the article, it says that they counted a total of 89 deaths and out of those, there were a total of 57 comebacks. This statement can be confirmed by our data. Above, within the total number of deaths, there were 89 and out of those came a total of 57 returns with the yes columns having an 89 in terms of deaths and 57 returns that had a yes, as well.
