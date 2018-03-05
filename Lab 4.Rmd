@@ -23,12 +23,14 @@ allinone <- allinone %>% mutate(Event= gsub("(.*)[1-5]", "\\1", Time),Time=parse
 
 ##2.
 ###Deaths
+
 "I counted 89 total deaths"
 ```{r}
 
 count(allinone,Outcome)
 ```
 ###Returns
+
 "on 57 occasions the individual made a comeback."
 ```{r}
 returns <- av %>% gather(Time,Return1,starts_with("Return"))
@@ -36,6 +38,7 @@ count(returns,Return1)
 ```
 
 ###Multiple Returns
+
 "But you can only tempt death so many times. There's a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife, but only a 50 percent chance they recovered from a second or third death."
 ```{r}
 chances <- av %>% gather(Time,Return1,starts_with("Return1"))
