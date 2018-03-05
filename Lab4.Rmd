@@ -32,4 +32,4 @@ allinone %>% filter(Event == "Return") %>% count(Outcome)
 
 2.
 
-Based on the article, it says that they counted a total of 89 deaths and out of those, there were a total of 57 comebacks. This statement can be confirmed by our data. Above, within the total number of deaths, there were 89 and out of those came a total of 57 returns.
+Based on the article, it says that they counted a total of 89 deaths and out of those, there were a total of 57 comebacks. This statement can be confirmed by our data. Above, within the total number of deaths, there were 89 and out of those came a total of 57 returns with the yes columns having an 89 in terms of deaths and 57 returns that had a yes, as well.
